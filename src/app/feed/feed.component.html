@@ -6,19 +6,19 @@
     <div class="content">
       <a class="author">{{tweet.author}}</a>
       <div class="metadata">
-        <span class="date"> {{tweet.date  }}</span>
+        <span class="date">{{ tweet.date | date}}</span>
       </div>
       <div class="text">
         {{tweet.body}}
       </div>
       <div class="actions">
-        <a class="reply">Reply</a>
-        <a class="like">
+        <a class="reply" (click)="OnReply(tweet)">Reply</a>
+        <a class="like" (click)="OnFavorite(tweet)">
           <i class="like icon"></i> {{tweet.favorites.length}} Favorites
         </a>
 
-        <a class="retweet">
-          <i class="retweet icon"></i> {{tweet.retweets.length}} Retweets
+        <a class="retweet" (click)="OnRetweet(tweet)">
+          <i class="retweet icon" ></i> {{tweet.retweets.length}} Retweets
         </a>
       </div>
     </div>
@@ -27,12 +27,12 @@
 <div *ngIf='!tweets.length'>
   <h2>No tweets today.</h2>
 </div>
-<form class="ui reply form">
+<form class="ui form">
   <div class="field">
-      <textarea>Gnarly Bro, nothing bogus here!
-      </textarea>
+    <label>What's on your mind?</label>
+    <textarea name='body' placeholder="Penny for your thoughts" type="text" [(ngModel)]="tweetText"></textarea>
   </div>
-  <div class="ui blue labeled submit icon button">
-      <i class="icon edit"></i> Add Reply
-  </div>
+
+  <button class="ui button primary" type="button"
+         (click)='OnNewTweet()'>Tweet</button>
 </form>

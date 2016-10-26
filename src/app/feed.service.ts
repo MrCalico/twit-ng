@@ -6,6 +6,9 @@ import { UserService } from './user.service';
 export class FeedService {
 
   private tweets = [
+        new Tweet(`I like to code as if no one else will have to edit  
+          my code.  It's always to valueable and not open source.`,
+          'John', new Date(), ['Jake'],  []),
 
     new Tweet(`Always code as if the guy who ends up maintaining your  
           code will be a violent psychopath who knows where you live.`,
