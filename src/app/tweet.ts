@@ -7,4 +7,12 @@ export class Tweet {
         this.avatar = `${author}.jpg`;
     }
 
+    hasFavorited(userId : string) : boolean {
+    return this.favorites.indexOf(userId) != -1;
+    }
+
+    hasRetweeted(userId : string) : boolean {
+        return this.retweets.indexOf(userId) != -1;
+    }
+
 }

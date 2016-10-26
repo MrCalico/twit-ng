@@ -20,6 +20,12 @@ export class FeedComponent implements OnInit {
     this.tweets = this.feedService.getCurrentFeed();
   }
 
+  private isUserInCollection(collection : string[], userId : string) : boolean {
+
+    return collection.indexOf(userId) != -1;
+
+  }
+
 OnFavorite(tweet) {
   this.feedService.favoriteTweet(tweet);
 }
