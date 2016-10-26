@@ -15,13 +15,13 @@
         <a class="reply" (click)="OnReply(tweet)">Reply</a>
         <a class="like" (click)="OnFavorite(tweet)">
           <i class="like icon" [ngClass]=
-          '{ liked: isUserInCollection(tweet.favorites, "John") }'></i>
+          '{ liked: tweet.hasFavorited(userService.getCurrentUser()) }'></i>
            {{tweet.favorites.length}} Favorites
         </a>
 
         <a class="retweet" (click)="OnRetweet(tweet)">
           <i class="retweet icon" [ngClass]=
-          '{ retweeted: isUserInCollection(tweet.retweets, "John") }'></i>
+          '{ retweeted: tweet.hasRetweeted(userService.getCurrentUser()) }'></i>
             {{tweet.retweets.length}} Retweets
         </a>
       </div>
