@@ -6,7 +6,7 @@
     <div class="content">
       <a class="author">{{tweet.author}}</a>
       <div class="metadata">
-        <span class="date">{{ tweet.date | date}}</span>
+        <span class="date">{{ tweet.date | date:'medium'}}</span>
       </div>
       <div class="text">
         {{tweet.body}}
