@@ -8,14 +8,12 @@ import { FeedService } from '../feed.service';
 })
 export class FriendsComponent implements OnInit {
 
-  friends = [];
+  friends = ['Tom','Dick','Harry'];
 
   constructor(private feedService: FeedService) { }
 
-
   ngOnInit() {
-  
-    this.friends = this.feedService.getFriends();
-    console.log(this.friends);
+    this.feedService.getFriends().subscribe((Friends)=>this.friends=Friends);
   }
+
 }

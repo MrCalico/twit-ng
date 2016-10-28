@@ -80,9 +80,10 @@ export class FeedService {
 
   }
 
-  getFriends() : Array<string> {
-    return ['Brenda','Connor','Darnell','Jake','Maxwell','Sally','Scott'];
+  getFriends() : Observable<string[]> {
 
+      return this.http.get('/api/friends').map((resp: Response) => resp.json().data as string[]);
   }
+    //return ['Brenda','Connor','Darnell','Jake','Maxwell','Sally','Scott'];
 
 }
