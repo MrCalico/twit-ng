@@ -1,3 +1,14 @@
+<form class="ui form">
+  <div class="field">
+    <label>What's on your mind?</label>
+    <textarea rows="2" name='body' placeholder="Penny for your thoughts" type="text" [(ngModel)]="tweetText"></textarea>
+  </div>
+
+  <button class="ui button primary" type="button"
+         (click)='OnNewTweet()'>
+         Tweet
+</button>
+</form>
 <div class="ui comments" *ngIf='tweets.length'>
   <div class="comment" *ngFor='let tweet of tweets'>
     <a class="avatar">
@@ -31,12 +42,4 @@
 <div *ngIf='!tweets.length'>
   <h2>No tweets today.</h2>
 </div>
-<form class="ui form">
-  <div class="field">
-    <label>What's on your mind?</label>
-    <textarea name='body' placeholder="Penny for your thoughts" type="text" [(ngModel)]="tweetText"></textarea>
-  </div>
 
-  <button class="ui button primary" type="button"
-         (click)='OnNewTweet()'>Tweet</button>
-</form>

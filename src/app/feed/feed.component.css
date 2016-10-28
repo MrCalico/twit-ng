@@ -5,3 +5,8 @@
 .retweeted {
     color: red !important;
 }
+
+.mytext {
+    height: 4em;
+    color: red;
+}

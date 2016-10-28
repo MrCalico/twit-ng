@@ -1,46 +1,31 @@
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+
 import { Tweet } from './tweet';
 import { UserService } from './user.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class FeedService {
 
-  private tweets = [
-        new Tweet(`I like to code as if no one else will have to edit  
-          my code.  It's always to valueable and not open source.`,
-          'John', new Date(), ['Jake'],  []),
+  tweets = [];
 
-    new Tweet(`Always code as if the guy who ends up maintaining your  
-          code will be a violent psychopath who knows where you live.`,
-          'Maxwell', new Date(), ['Jake'],  []),
+  constructor(private userService: UserService, private http : Http) {  }
 
-    new Tweet(`Measuring programming progress by lines of code is  
-          like measuring aircraft building progress by weight`,
-          'Sally', new Date(),  [],  ['Sally'] ),
-
-    new Tweet(`Debugging is twice as hard as writing the code in the 
-          first place. Therefore, if you write the code as cleverly 
-          as possible, you are, by definition, not smart enough to debug it.`,
-           'Scott',  new Date(),  ['Glen'],  ['Mary']),
-
-    new Tweet(`People think that computer science is the art of geniuses but the 
-          actual reality is the opposite, just many people doing things that build 
-          on each other, like a wall of mini stones`,
-          'Darnell',  new Date(),  ['Joe', 'Mary'],  [] ),
-
-    new Tweet(`You can’t have great software without a great team, and most 
-          software teams behave like dysfunctional families.`,
-          'Brenda',  new Date(),  [],  ['Mary', 'Glen'] ),
-  ]
-
-
-  constructor(private userService: UserService) { 
-
+  private getTweetFromJson(obj: Tweet): Tweet {
+    return new Tweet(obj.id, obj.body, obj.author, obj.date, obj.retweets, obj.favorites)
   }
 
-  getCurrentFeed() : Array<Tweet> {
+  getCurrentFeed() : Observable<Tweet[]> {
 
-    return this.tweets;
+    return this.http.get('/api/tweets').map((resp: Response) => {
+      console.log("Resp: " + resp.json());
+      var fetchedTweets = [];
+      for (let tweet of resp.json().data) {
+        fetchedTweets.push(this.getTweetFromJson(tweet));
+      }
+      return (fetchedTweets as Array<Tweet>);
+    });
 
 
   }
@@ -51,16 +36,37 @@ export class FeedService {
 
   }
 
+  updateTweet(tweet: Tweet) {
+    let jsTweet = JSON.stringify(tweet);
+    console.log("Stringified: " + jsTweet);
+    let url = `/api/tweets/${tweet.id}`;
+
+    return this.http.put(url, jsTweet).map(
+      (resp: Response) => {
+        console.log("Sucess. Yay!");
+        //console.log(resp.json()); // Null on update
+      });
+  }
+
   postNewTweet(tweetText : string) {
-    this.tweets.unshift(
-          new Tweet(tweetText, this.userService.getCurrentUser(), new Date(), [], []) 
-       );
+
+    let jsTweet = JSON.stringify({
+      body: tweetText, author: this.userService.getCurrentUser(),
+      date: new Date(), retweets: [], favorites: []
+    });
+
+    return this.http.post('/api/tweets', jsTweet).map(
+      (resp: Response) => {
+        console.log(resp.json());
+        return this.getTweetFromJson(resp.json().data);
+      });
   }
 
   reTweet(tweet : Tweet) {
 
     if (!this.isUserInCollection(tweet.retweets, this.userService.getCurrentUser())) {
       tweet.retweets.push(this.userService.getCurrentUser());
+      this.updateTweet(tweet).subscribe(resp => console.log(resp));
     }
 
   }
@@ -69,7 +75,13 @@ export class FeedService {
 
     if (!this.isUserInCollection(tweet.favorites, this.userService.getCurrentUser())) {
       tweet.favorites.push(this.userService.getCurrentUser());
+      this.updateTweet(tweet).subscribe(resp => console.log(resp));
     }
+
+  }
+
+  getFriends() : Array<string> {
+    return ['Brenda','Connor','Darnell','Jake','Maxwell','Sally','Scott'];
 
   }
 
