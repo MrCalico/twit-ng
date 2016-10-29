@@ -4,7 +4,7 @@
     <input formControlName="username" type="text" placeholder="User name">
   </div>
   <div class="ui error message" *ngIf='form.controls.username.invalid &&
-                                     form.controls.username.dirty'>
+                                      form.controls.username.dirty'>
               Username is a required field.
   </div>
   <div class="field">
@@ -18,7 +18,7 @@
     </div>
   </div>
   <button class="ui button" type="submit">Submit</button>
-<div>form data: {{ form.value | json }}</div>
-<div>Invalid: {{ form.controls.username.invalid }}</div>
-<div>Dirty: {{ form.controls.username.dirty }}</div>
+  <div>form data: {{ form.value | json }}</div>
+  <div>Invalid: {{ form.controls.username.invalid }}</div>
+  <div>Dirty: {{ form.controls.username.dirty }}</div>
 </form>

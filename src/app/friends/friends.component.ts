@@ -8,7 +8,7 @@ import { FeedService } from '../feed.service';
 })
 export class FriendsComponent implements OnInit {
 
-  friends = ['Tom','Dick','Harry'];
+  friends = [];
 
   constructor(private feedService: FeedService) { }
 
