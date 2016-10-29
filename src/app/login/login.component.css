@@ -1,0 +1,10 @@
+form {
+    margin: 2em;
+}
+
+.validatorError {
+    background-color: yellow;
+    outline-style: solid;
+    outline-width: 1px;
+    color: red;
+}

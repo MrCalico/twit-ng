@@ -13,7 +13,9 @@ export class FeedService {
   constructor(private userService: UserService, private http : Http) {  }
 
   private getTweetFromJson(obj: Tweet): Tweet {
+
     return new Tweet(obj.id, obj.body, obj.author, obj.date, obj.retweets, obj.favorites)
+
   }
 
   getCurrentFeed() : Observable<Tweet[]> {
@@ -24,16 +26,19 @@ export class FeedService {
       for (let tweet of resp.json().data) {
         fetchedTweets.push(this.getTweetFromJson(tweet));
       }
+      //throw "A really nasty bug took a dump right here!";
       return (fetchedTweets as Array<Tweet>);
-    });
-
+    }).catch( this.handleError );
 
   }
 
+  private handleError(err): Observable<String> { 
+    console.log ("handleError: " + err);
+    return Observable.throw(err);
+  } 
+
   private isUserInCollection(collection : string[], userId : string) : boolean {
-
       return collection.indexOf(userId) != -1;
-
   }
 
   updateTweet(tweet: Tweet) {
@@ -43,8 +48,12 @@ export class FeedService {
 
     return this.http.put(url, jsTweet).map(
       (resp: Response) => {
-        console.log("Sucess. Yay!");
-        //console.log(resp.json()); // Null on update
+        if (resp.status == 204) {
+          console.log("Sucess. Yay!");
+        } else {
+          throw `Error Updating TweetId: ${tweet.id} Response: ${resp.status} `;
+        }
+      
       });
   }
 
@@ -84,6 +93,5 @@ export class FeedService {
 
       return this.http.get('/api/friends').map((resp: Response) => resp.json().data as string[]);
   }
-    //return ['Brenda','Connor','Darnell','Jake','Maxwell','Sally','Scott'];
 
 }

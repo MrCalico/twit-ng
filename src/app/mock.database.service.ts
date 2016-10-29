@@ -9,7 +9,8 @@ export class MockDatabaseService implements InMemoryDbService {
             "Sally",
             "Maxwell",
             "Darnell",
-            "Conner"
+            "Connor",
+            "Scott"
         ];
 
         let tweets = [

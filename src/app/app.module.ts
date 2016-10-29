@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
@@ -18,6 +18,7 @@ import { FriendComponent } from './friend/friend.component';
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { MockDatabaseService } from './mock.database.service';
+import { LoginComponent } from './login/login.component';
 
 //import { UserService } from './user.service';
 
@@ -29,13 +30,15 @@ import { MockDatabaseService } from './mock.database.service';
     MessagesComponent,
     FriendsComponent,
     FriendComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     AppRoutingModule,
-    InMemoryWebApiModule.forRoot(MockDatabaseService, { delay: 100, rootPath: 'api/'}),
+    InMemoryWebApiModule.forRoot(MockDatabaseService, { delay: 3100, rootPath: 'api/'}),
   ],
   providers: [FeedService, UserService ],
   bootstrap: [AppComponent]

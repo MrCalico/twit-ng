@@ -5,13 +5,15 @@ import { FeedComponent } from './feed/feed.component';
 import { FriendsComponent } from './friends/friends.component';
 import { FriendComponent } from './friend/friend.component';
 import { MessagesComponent } from './messages/messages.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
     { path:'', redirectTo: '/feed', pathMatch: 'full' },
     { path:'feed', component: FeedComponent },
     { path:'messages', component: MessagesComponent },
     { path:'friends', component: FriendsComponent },
-    { path:'friends/:friendId', component: FriendComponent }
+    { path:'friends/:friendId', component: FriendComponent },
+    { path:'login', component: LoginComponent },
 ];
 
 @NgModule({

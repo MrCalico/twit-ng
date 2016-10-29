@@ -13,13 +13,17 @@ import { Tweet } from '../tweet';
 export class FeedComponent implements OnInit {
   tweets = [];
   tweetText = '';
+  errorText ='';
+  loaded = false;
 
   constructor(private feedService: FeedService, private userService: UserService) { }
 
   ngOnInit() {
-      this.feedService.getCurrentFeed().subscribe( (newTweets) => {
-      this.tweets = newTweets;
-    });
+      this.feedService.getCurrentFeed().subscribe( 
+        newTweets => this.tweets = newTweets, 
+        err => this.errorText = `Opps: ${err}`,
+        () => this.loaded = true
+      );
   }
 
   OnFavorite(tweet) {
@@ -32,9 +36,9 @@ export class FeedComponent implements OnInit {
 
   OnNewTweet() {
     console.log(this.tweetText);
-    this.feedService.postNewTweet(this.tweetText).subscribe( (newTweet: Tweet) => {
-      this.tweets.unshift(newTweet);
-    });
+    this.feedService.postNewTweet(this.tweetText).subscribe( 
+      (newTweet: Tweet) => this.tweets.unshift(newTweet),
+      err => this.errorText = `Opps: ${err}`);
     this.tweetText = '';
   } 
 
